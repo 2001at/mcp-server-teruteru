@@ -25,22 +25,14 @@ export const playScale = async (
         .max(5000)
         .describe("鳴らす長さ（ミリ秒）"),
     },
-    async ({
-      reason,
-      frequency,
-      duration,
-    }: {
-      reason?: string;
-      frequency: number;
-      duration: number;
-    }) => {
-      const command = `${frequency},${duration}`;
+    async (input) => {
+      const command = `${input.frequency},${input.duration}`;
       await serialService.write(command);
       return {
         content: [
           {
             type: "text",
-            text: `Successfully played sound at ${frequency} Hz for ${duration} ms.`,
+            text: `Successfully played sound at ${input.frequency} Hz for ${input.duration} ms.`,
           },
         ],
       };
