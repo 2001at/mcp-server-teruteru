@@ -7,14 +7,14 @@ dotenv.config();
 const PORT_PATH = "/dev/cu.usbmodem101";
 const serial = new SerialService(PORT_PATH);
 const server = new McpServer({
-  name: "ESP32 LED Control Server",
-  version: "1.0.0",
+    name: "ESP32 LED Control Server",
+    version: "1.0.0",
 });
 playScale(server, serial);
 async function main() {
-  console.log("Starting MCP Server with stdio transport...");
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
+    console.log("Starting MCP Server with stdio transport...");
+    const transport = new StdioServerTransport();
+    await server.connect(transport);
 }
 main().catch(console.error);
 //# sourceMappingURL=app.js.map
