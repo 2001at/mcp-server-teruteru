@@ -1,10 +1,8 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { SerialPort } from "serialport";
 import { ReadlineParser } from "@serialport/parser-readline";
 import { z } from "zod";
-import express, {} from "express";
 import dotenv from "dotenv";
 dotenv.config();
 const PORT_PATH = "/dev/cu.usbmodem101";
@@ -62,46 +60,9 @@ server.tool("playScale", "SP32 にシリアルで「周波数,鳴らす長さ」
     };
 });
 async function main() {
-    const args = process.argv.slice(2);
-    const useHttp = args.includes("--http");
-    if (useHttp) {
-        const app = express();
-        app.use(express.json());
-        app.all("/mcp", async (req, res) => {
-            if (req.method !== "POST") {
-                return res
-                    .status(405)
-                    .json({ error: { message: `Method not allowed: ${req.method}` } });
-            }
-            const transport = new StreamableHTTPServerTransport({
-                sessionIdGenerator: undefined,
-            });
-            try {
-                res.on("close", () => {
-                    transport.close();
-                });
-                await transport.handleRequest(req, res, req.body);
-            }
-            catch (error) {
-                console.error("MCPリクエスト処理エラー:", error);
-                if (!res.headersSent) {
-                    res.status(500).json({ error: { message: "Internal server error" } });
-                }
-            }
-        });
-        app.listen(SERVER_PORT, () => {
-            console.log(`🚀 MCP HTTP Server running on http://localhost:${SERVER_PORT}/mcp`);
-        });
-        const httpTransport = new StreamableHTTPServerTransport({
-            sessionIdGenerator: undefined,
-        });
-        await server.connect(httpTransport);
-    }
-    else {
-        console.log("Starting MCP Server with stdio transport...");
-        const transport = new StdioServerTransport();
-        await server.connect(transport);
-    }
+    console.log("Starting MCP Server with stdio transport...");
+    const transport = new StdioServerTransport();
+    await server.connect(transport);
 }
 main().catch(console.error);
 //# sourceMappingURL=app.js.map
