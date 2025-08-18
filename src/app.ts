@@ -7,6 +7,10 @@ import { z } from "zod";
 import express, { type Request, type Response } from "express";
 import dotenv from "dotenv";
 
+/*
+ * 書き終わったら保存 & npx tsc を実行してコンパイルする
+ */
+
 dotenv.config();
 
 const PORT_PATH: string = "/dev/cu.usbmodem101";
