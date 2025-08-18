@@ -1,0 +1,1 @@
+{"version":3,"file":"serial_service.d.ts","sourceRoot":"","sources":["../src/serial_service.ts"],"names":[],"mappings":"AAGA,qBAAa,aAAa;IAIZ,OAAO,CAAC,IAAI;IAAU,OAAO,CAAC,QAAQ;IAHlD,OAAO,CAAC,IAAI,CAAa;IACzB,OAAO,CAAC,MAAM,CAAiB;gBAEX,IAAI,EAAE,MAAM,EAAU,QAAQ,GAAE,MAAe;IAanE;;OAEG;IACG,KAAK,CAAC,OAAO,EAAE,MAAM,GAAG,OAAO,CAAC,IAAI,CAAC;CAS5C"}
