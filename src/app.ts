@@ -3,7 +3,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 
 import dotenv from "dotenv";
 import { SerialService } from "./serial_service.js";
-import { playScale } from "./buzzer.js";
+import { playScale } from "./tools/buzzer.js";
 
 dotenv.config();
 
