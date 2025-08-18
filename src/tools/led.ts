@@ -9,10 +9,10 @@ export const ledOnOff = async (
   // @ts-ignore
   mcpServer.tool(
     "ledBrink",
-    "ESP32 にシリアルで「on/off」を送信すると、LEDを点灯させます。",
+    "ESP32 にシリアルで「HIGH/LOW」を送信すると、LEDを点灯させます。",
     {
       reason: z.string().describe("LEDを点灯させる理由").optional(),
-      command: z.string().describe("LEDを点灯させるコマンド（on/off）"),
+      command: z.string().describe("LEDを点灯させるコマンド（HIGH/LOW）"),
     },
     async (input) => {
       await serialService.write(input.command);

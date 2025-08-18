@@ -4,10 +4,11 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import dotenv from "dotenv";
 import { SerialService } from "./serial_service.js";
 import { playScale } from "./tools/buzzer.js";
+import { ledOnOff } from "./tools/led.js";
 
 dotenv.config();
 
-const PORT_PATH: string = "/dev/cu.usbmodem101";
+export const PORT_PATH: string = "/dev/cu.usbmodem101";
 
 const serial = new SerialService(PORT_PATH);
 const server = new McpServer({
@@ -15,6 +16,7 @@ const server = new McpServer({
   version: "1.0.0",
 });
 
+ledOnOff(server, serial);
 playScale(server, serial);
 
 async function main(): Promise<void> {

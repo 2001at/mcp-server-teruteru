@@ -3,14 +3,15 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import dotenv from "dotenv";
 import { SerialService } from "./serial_service.js";
 import { playScale } from "./tools/buzzer.js";
+import { ledOnOff } from "./tools/led.js";
 dotenv.config();
-const PORT_PATH = "/dev/cu.usbmodem101";
-const serial = new SerialService(PORT_PATH);
+// export const PORT_PATH: string = "/dev/cu.usbmodem101";
 const server = new McpServer({
     name: "ESP32 LED Control Server",
     version: "1.0.0",
 });
-playScale(server, serial);
+ledOnOff();
+// playScale(server, serial);
 async function main() {
     console.log("Starting MCP Server with stdio transport...");
     const transport = new StdioServerTransport();
