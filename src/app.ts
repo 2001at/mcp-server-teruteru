@@ -41,6 +41,7 @@ const server = new McpServer({
   version: "1.0.0",
 });
 
+// @ts-ignore
 server.tool(
   "playScale",
   "SP32 にシリアルで「周波数,鳴らす長さ」を送信すると、圧電ブザーでその通りに音を鳴らします。{frequency} は 20Hz から 20kHz の範囲で指定できます。また、{duration} は 100ms から 5000msの範囲で指定できます。",
