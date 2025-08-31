@@ -2,8 +2,6 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { SerialService } from "../serial_service.js";
 import z from "zod";
 
-// const serial = new SerialService("/dev/cu.usbmodem101");
-
 export const ledOnOff = async (
   mcpServer: McpServer,
   serialService: SerialService

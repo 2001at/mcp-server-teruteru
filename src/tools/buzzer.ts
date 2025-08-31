@@ -2,7 +2,6 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { SerialService } from "../serial_service.js";
 import z from "zod";
 
-
 export const playScale = async (
   mcpServer: McpServer,
   serialService: SerialService
@@ -10,30 +9,20 @@ export const playScale = async (
   // @ts-ignore
   mcpServer.tool(
     "playScale",
-    "SP32 にシリアルで「周波数,鳴らす長さ」を送信すると、圧電ブザーでその通りに音を鳴らします。{frequency} は 20Hz から 20kHz の範囲で指定できます。また、{duration} は 100ms から 5000msの範囲で指定できます。",
+    "SP32 にシリアルで「周波数,鳴らす長さ」を送信すると、圧電ブザーでその通りに音を鳴らします。連続した音符を演奏するには、'freq1,dur1;freq2,dur2;...' の形式で入力します。",
     {
       reason: z.string().describe("ブザーを再生する理由").optional(),
-      frequency: z
-        .number()
-        .int()
-        .min(20)
-        .max(20000)
-        .describe("鳴らす周波数（Hz）"),
-      duration: z
-        .number()
-        .int()
-        .min(100)
-        .max(5000)
-        .describe("鳴らす長さ（ミリ秒）"),
+      noteData: z
+        .string()
+        .describe("鳴らす音符データ。例: '440,500' または '262,500;262,500;...'"),
     },
     async (input) => {
-      const command = `${input.frequency},${input.duration}`;
-      await serialService.write(command);
+      await serialService.write(input.noteData);
       return {
         content: [
           {
             type: "text",
-            text: `Successfully played sound at ${input.frequency} Hz for ${input.duration} ms.`,
+            text: `Successfully sent note data to ESP32: ${input.noteData}`,
           },
         ],
       };

@@ -5,8 +5,11 @@ import { SerialService } from "./serial_service.js";
 import { playScale } from "./tools/buzzer.js";
 import { ledOnOff } from "./tools/led.js";
 import z from "zod";
+import { carControl } from "./tools/car.js";
+import { playSongFromTitle } from "./tools/music.js";
+// npx tsc を実行前に入力
 dotenv.config();
-export const PORT_PATH = "/dev/cu.usbmodem101";
+export const PORT_PATH = "/dev/cu.usbmodem2101";
 const server = new McpServer({
     name: "ESP32 LED Control Server",
     version: "1.0.0",
@@ -14,6 +17,8 @@ const server = new McpServer({
 const serial = new SerialService(PORT_PATH);
 ledOnOff(server, serial);
 playScale(server, serial);
+carControl(server, serial);
+playSongFromTitle(server, serial);
 async function main() {
     console.log("Starting MCP Server with stdio transport...");
     const transport = new StdioServerTransport();
